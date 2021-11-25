@@ -21,7 +21,6 @@ logging:
 mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
-
 spring:
   #  静态资源的访问路径
   mvc:

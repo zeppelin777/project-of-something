@@ -1,40 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>首页</title>
-    <style type="text/css">
-        table {
-            border-collapse: collapse;
-            font-size: 14px;
-            width: 80%;
-            margin: auto
-        }
-
-        table, th, td {
-            border: 1px solid darkslategray;
-            padding: 10px
-        }
+    <title>summary</title>
+    <style>
     </style>
 </head>
 <body>
-<div style="text-align: center">
-    <span style="color: darkslategray; font-size: 30px">欢迎光临！</span>
-    <hr/>
-    <table class="list">
-        <tr>
-            <th>id</th>
-            <th>用户名</th>
-            <th>性别</th>
-            <th>生日</th>
-        </tr>
-        <tr>
-            <td>1</td>
-            <td th:text="${user.userName}">zhangsan</td>
-            <td>男</td>
-            <td>1980-02-30</td>
-        </tr>
-    </table>
+<nav th:replace="top::top"></nav>
+<div th:replace="top::top">
+
 </div>
+<div style="text-align: center">
+    <span style="color: darkslategray; font-size: 30px">hi, welcome my site.</span>
+</div>
+<div th:replace="footer::footer">
+
+</div>
+<footer th:replace="footer::footer"></footer>
 </body>
 </html>

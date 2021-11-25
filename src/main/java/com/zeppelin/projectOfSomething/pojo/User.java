@@ -1,13 +1,11 @@
 package com.zeppelin.projectOfSomething.pojo;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.util.Date;
 
-@AllArgsConstructor
 @Data
 @Builder
 public class User implements Serializable {

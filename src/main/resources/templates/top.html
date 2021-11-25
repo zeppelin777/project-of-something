@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="main-top" th:fragment="top">
+    <div class="user-name" th:if="${session.loginUser==null}">
+        <a href="login" th:href="@{/login}" class=""><i class="ion ion-log-out"></i> login</a>
+    </div>
+    <div class="user-name" th:if="${session.loginUser!=null}">
+        <span class="user-name" th:text="${session.loginUser.userName}">visitor</span>
+        <span><a href="logout" th:href="@{/logout}" class=""><i class="ion ion-log-out"></i> logout</a></span>
+    </div>
+</div>
+</body>
+</html>

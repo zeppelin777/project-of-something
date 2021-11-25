@@ -1,3 +1,9 @@
 package com.zeppelin.projectOfSomething.service;
 
-public interface UserService {}
+import com.zeppelin.projectOfSomething.pojo.User;
+
+public interface UserService {
+  User getUserByEmail(String email);
+
+  boolean insert(User user);
+}
