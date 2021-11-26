@@ -22,6 +22,11 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
   mapper-locations: classpath:mybatis/mapper/*.xml
 spring:
+  thymeleaf:
+    cache: false
+  devtools:
+    restart:
+      enabled: true
   #  静态资源的访问路径
   mvc:
     static-path-pattern: /**
@@ -48,6 +53,3 @@ spring:
     maxPoolPreparedStatementPerConnectionSize: 20
     useGlobalDataSourceStat: true
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
-  web:
-    resources:
-      static-locations: classpath:/templates/
