@@ -11,8 +11,8 @@ import javax.servlet.http.HttpSession;
 
 public class BaseController {
 
-  @Autowired protected UserService userService;
-
+  @Autowired
+  protected UserService userService;
   protected HttpServletRequest request;
   protected HttpServletResponse response;
   protected HttpSession session;

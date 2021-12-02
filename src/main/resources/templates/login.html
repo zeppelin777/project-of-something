@@ -7,9 +7,10 @@
     </style>
 </head>
 <body>
-<nav th:replace="bar/top::top"></nav>
-<form id="">
-
+<form th:action="@{/verify}">
+    Name: <input type="text" name="username"><br>
+    Password: <input type="password" name="password">
+    <input type="submit" value="Submit">
 </form>
 <footer th:replace="bar/footer::footer"></footer>
 </body>

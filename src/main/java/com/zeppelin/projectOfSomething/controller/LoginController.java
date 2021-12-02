@@ -10,15 +10,32 @@ import java.util.Map;
 @Controller
 public class LoginController extends BaseController {
 
+  @GetMapping("/verify")
+  public String verify(User user, Map<String, Object> map) {
+    User loginUser = new User();
+    loginUser.setUserId(0);
+    loginUser.setUserName("test");
+    loginUser.setEmail("139420666@qq.com");
+    loginUser.setPassword("test");
+    session.setAttribute("loginUser", loginUser);
+    return "index";
+    //if (loginUser != null && loginUser.getPassword().equals(user.getPassword())) {
+    //
+    //  return "index";
+    //}
+    //String errorMsg = (loginUser == null ? "该邮箱尚未注册" : "密码错误");
+    //map.put("errorMsg", errorMsg);
+    //return "index";
+  }
+
   @GetMapping("/login")
-  public String login(User user, Map<String, Object> map) {
-    User loginUser = userService.getUserByEmail(user.getEmail());
-    if (loginUser != null && loginUser.getPassword().equals(user.getPassword())) {
-      session.setAttribute("loginUser", loginUser);
-      return "index";
-    }
-    String errorMsg = (loginUser == null ? "该邮箱尚未注册" : "密码错误");
-    map.put("errorMsg", errorMsg);
+  public String login() {
+    return "login";
+  }
+
+  @GetMapping("/logout")
+  public String logout() {
+    session.removeAttribute("loginUser");
     return "index";
   }
 

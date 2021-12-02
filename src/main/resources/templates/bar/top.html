@@ -3,7 +3,7 @@
 <body>
 <nav th:fragment="top" style="float:right;">
     <div th:if="${session.loginUser==null}">
-        <a href="/login.html" class=""> login</a>
+        <a href="/login" th:href="@{/login}" class=""> login</a>
     </div>
     <div th:if="${session.loginUser!=null}">
         <span th:text="${session.loginUser.userName}">visitor</span>
