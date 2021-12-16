@@ -10,7 +10,7 @@ public class User implements Serializable {
 
   private Integer userId;
 
-  private String userName;
+  private String username;
 
   private String email;
 
@@ -18,7 +18,7 @@ public class User implements Serializable {
 
   private Integer role;
 
-  private Date registerTime;
+  private Date loginDate;
 
-  private Date dateCreated;
+  private Date createdDate;
 }

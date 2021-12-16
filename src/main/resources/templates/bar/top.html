@@ -1,14 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-<body>
-<nav th:fragment="top" style="float:right;">
-    <div th:if="${session.loginUser==null}">
+<nav th:fragment="top">
+    <a href="/">Summary</a>
+    <span id="nav-top-right" style="float:right;">
+        <div th:if="${session.loginUser==null}">
         <a href="/login" th:href="@{/login}" class=""> login</a>
     </div>
     <div th:if="${session.loginUser!=null}">
-        <span th:text="${session.loginUser.userName}">visitor</span>
+        <span th:text="${session.loginUser.username}">visitor</span>
         <span><a href="logout" th:href="@{/logout}" class=""> logout</a></span>
     </div>
+    </span>
 </nav>
-</body>
-</html>

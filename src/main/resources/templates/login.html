@@ -3,15 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <title>summary</title>
-    <style>
-    </style>
+    <script src="https://unpkg.com/vue@next"></script>
+    <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-<form th:action="@{/verify}">
-    Name: <input type="text" name="username"><br>
-    Password: <input type="password" name="password">
-    <input type="submit" value="Submit">
-</form>
+<nav th:replace="bar/top::top"></nav>
+<div id="login-container">
+    <div v-if="isLogin">
+        <form method="post" th:action="@{/verify}">
+            Name: <input type="text" name="username"><br>
+            Password: <input type="password" name="password">
+            <input type="submit" value="Submit">
+        </form>
+
+        <button @click="toggleRegister">
+            {{ registry_message }}
+        </button>
+    </div>
+
+    <div v-if="!isLogin">
+        <form method="post" th:action="@{/registerUser}">
+            Name: <input type="text" name="username"><br>
+            Password: <input type="password" name="password"><br>
+            Confirm Password: <input type="password" name="confirmPassword">
+            <input type="submit" value="Submit">
+        </form>
+
+        <button @click="toggleRegister">
+            {{ login_message }}
+        </button>
+    </div>
+
+    <span th:text="" v-model="isLogin"></span>
+</div>
+
 <footer th:replace="bar/footer::footer"></footer>
 </body>
+<script type="text/javascript">
+    const EventHandling = {
+        data() {
+            return {
+                login_message: 'login your account',
+                registry_message: 'registry new account',
+                isLogin: true
+            }
+        },
+        methods: {
+            toggleRegister() {
+                this.isLogin = !this.isLogin;
+            }
+        }
+    }
+
+    Vue.createApp(EventHandling).mount('#login-container')
+</script>
 </html>
