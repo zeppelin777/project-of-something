@@ -1,12 +1,14 @@
 package com.zeppelin.projectOfSomething.mapper;
 
 import com.zeppelin.projectOfSomething.pojo.User;
-import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Mapper
-public interface UserMapper {
 
-  boolean insert(User user);
+public interface UserMapper extends JpaRepository<User, Long> {
 
-  User getUserByEmail(String email);
+  User findByEmail(String email);
+
+  User findByEmailAndPassword(String email, String password);
+
+  Boolean existsByEmail(String email);
 }
