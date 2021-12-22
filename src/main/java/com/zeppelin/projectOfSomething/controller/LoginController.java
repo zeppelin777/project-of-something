@@ -42,10 +42,9 @@ public class LoginController extends BaseController {
   public String register(User user, Map<String, Object> map) {
     String confirmPassword = request.getParameter("confirmPassword");
     if (Objects.equals(confirmPassword, user.getPassword())) {
-      if (userService.save(user) == null) {
-        map.put("errorMsg", "密码不匹配");
-        return "login";
-      }
+      map.put("errorMsg", "密码不匹配");
+      map.put("login", false);
+      return "login";
     }
     user.setUsername(user.getUsername().trim());
     user.setEmail(user.getEmail().trim());
@@ -55,14 +54,17 @@ public class LoginController extends BaseController {
     try {
       if (userService.existsByEmail(user.getEmail())) {
         map.put("errorMsg", "邮箱重复");
+        map.put("login", false);
         return "login";
       }
       if (userService.save(user) == null) {
         map.put("errorMsg", "服务器发生错误，注册失败");
+        map.put("login", false);
         return "login";
       }
     } catch (Exception e) {
       map.put("errorMsg", "服务器发生错误，注册失败");
+      map.put("login", false);
       return "login";
     }
     session.setAttribute("loginUser", user);

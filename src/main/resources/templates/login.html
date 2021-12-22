@@ -36,17 +36,17 @@
 
     <span th:text="${errorMsg}"></span>
 </div>
-
 <footer th:replace="bar/footer::footer"></footer>
 
 </body>
-<script type="text/javascript">
+<script type="text/javascript" th:inline="javascript">
     const EventHandling = {
         data() {
             return {
                 login: 'login',
                 registry: 'registry',
-                isLogin: true
+                loginTag: /*[[${login}]]*/ null,
+                isLogin: this.loginTag == null
             }
         },
         methods: {
