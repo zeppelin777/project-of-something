@@ -13,10 +13,17 @@ server:
     uri-encoding: UTF-8
 # 日志的存放位置与级别
 logging:
-  file:
-    name: log/test.log
+#  pattern:
+  #    file: '%d{yyyy-MMM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{15} - %msg%n'
   level:
     root: info
+  logback:
+    rollingpolicy:
+      total-size-cap: 0B
+      max-history: 7
+      max-file-size: 10MB
+  file:
+    path: logs
 # 配置Mybatis
 #mybatis:
 #  config-location: classpath:mybatis/mybatis-config.xml
@@ -30,30 +37,24 @@ spring:
   #  静态资源的访问路径
   mvc:
     static-path-pattern: /**
+  # 配置数据源
   datasource:
-    # 配置数据源
     username: root
     password: cr123!@#
     url: jdbc:mysql://127.0.0.1:3306/test?serverTimezone=Hongkong&useAffectedRows=true
     driver-class-name: com.mysql.cj.jdbc.Driver
-    type: com.alibaba.druid.pool.DruidDataSource
-    # 配置druid数据源
-    initialSize: 5
-    minIdle: 5
-    maxActive: 20
-    maxWait: 60000
-    timeBetweenEvictionRunsMillis: 60000
-    minEvictableIdleTimeMillis: 300000
-    validationQuery: SELECT 1 FROM DUAL
-    testWhileIdle: true
-    testOnBorrow: false
-    testOnReturn: false
-    poolPreparedStatements: true
-    filters: stat,wall,log4j
-    maxPoolPreparedStatementPerConnectionSize: 20
-    useGlobalDataSourceStat: true
-    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+    # hikari数据源配置，
+    hikari:
+      connection-test-query: SELECT 1 FROM DUAL
+      connection-timeout: 30000
+      maximum-pool-size: 20
+      max-lifetime: 1800000
+      minimum-idle: 5
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+  #    show-sql: true
+  redis:
+    database: 1
+    host: localhost
+    port: 6379

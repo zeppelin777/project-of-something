@@ -4,70 +4,88 @@ import com.zeppelin.projectOfSomething.pojo.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
+/**
+ * The type Login controller.
+ *
+ * @author eddie
+ */
 @Controller
 public class LoginController extends BaseController {
 
+  /**
+   * Verify string.
+   *
+   * @param user the user
+   * @param map  the map
+   * @return the string
+   */
   @PostMapping("/verify")
   public String verify(User user, Map<String, Object> map) {
     if (loginUser != null) {
-      return "index";
+      return "redirect:/";
     }
-    User checkUser = userService.getUserByEmail(user.getEmail());
-    if (checkUser != null && Objects.equals(checkUser.getPassword(), user.getPassword())) {
+    User checkUser = userService.checkUserByEmailAndPassword(user.getEmail().trim(), user.getPassword().trim());
+    if (checkUser != null) {
       session.setAttribute("loginUser", checkUser);
-      return "index";
+      return "redirect:/";
     }
-    String errorMsg = (checkUser == null ? "该邮箱尚未注册" : "密码错误");
+    String errorMsg = ("登录失败");
     map.put("errorMsg", errorMsg);
     return "login";
   }
 
+  /**
+   * Login string.
+   *
+   * @return the string
+   */
   @GetMapping("/login")
   public String login() {
     return "login";
   }
 
+  /**
+   * Logout string.
+   *
+   * @return the string
+   */
   @GetMapping("/logout")
   public String logout() {
     session.removeAttribute("loginUser");
-    return "index";
+    return "redirect:/";
   }
 
+  /**
+   * Register string.
+   *
+   * @param user the user
+   * @param map  the map
+   * @return the string
+   */
   @PostMapping("/register")
-  public String register(User user, Map<String, Object> map) {
-    String confirmPassword = request.getParameter("confirmPassword");
-    if (Objects.equals(confirmPassword, user.getPassword())) {
-      map.put("errorMsg", "密码不匹配");
+  public String register(@RequestParam(required = false) String confirmPassword, User user, Map<String, Object> map) {
+    if (!Objects.equals(confirmPassword, user.getPassword())) {
+      map.put("errorMsg", "确认密码不匹配");
       map.put("login", false);
       return "login";
     }
-    user.setUsername(user.getUsername().trim());
-    user.setEmail(user.getEmail().trim());
-    user.setPassword(user.getPassword().trim());
-    user.setCreatedDate(new Date());
-    user.setRole((byte) 1);
-    try {
-      if (userService.existsByEmail(user.getEmail())) {
-        map.put("errorMsg", "邮箱重复");
-        map.put("login", false);
-        return "login";
-      }
-      if (userService.save(user) == null) {
-        map.put("errorMsg", "服务器发生错误，注册失败");
-        map.put("login", false);
-        return "login";
-      }
-    } catch (Exception e) {
+    if (userService.existsUserByEmail(user.getEmail().trim())) {
+      map.put("errorMsg", "邮箱重复");
+      map.put("login", false);
+      return "login";
+    }
+    User save = userService.save(user);
+    if (save == null) {
       map.put("errorMsg", "服务器发生错误，注册失败");
       map.put("login", false);
       return "login";
     }
-    session.setAttribute("loginUser", user);
-    return "index";
+    session.setAttribute("loginUser", save);
+    return "redirect:/";
   }
 }

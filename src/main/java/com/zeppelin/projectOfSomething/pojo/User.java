@@ -1,12 +1,20 @@
 package com.zeppelin.projectOfSomething.pojo;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
-@Data
+/**
+ * @author eddie
+ */
+
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "user")
 public class User implements Serializable {
@@ -24,12 +32,15 @@ public class User implements Serializable {
   @Column(name = "password")
   private String password;
 
+  @Column(name = "random_salt")
+  private String randomSalt;
+
   @Column(name = "role")
   private Byte role;
 
-  @Column(name = "loginDate")
+  @Column(name = "login_date")
   private Date loginDate;
 
-  @Column(name = "createdDate")
+  @Column(name = "created_date")
   private Date createdDate;
 }
